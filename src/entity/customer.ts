@@ -1,6 +1,6 @@
 import Address from "./adress";
 
-class Costumer {
+export default class Customer {
   _id: string;
   _name: string = "";
   _address!: Address;
@@ -40,7 +40,3 @@ class Costumer {
     this._address = address;
   }
 }
-
-let costumer = new Costumer("1", "Costumer 1");
-costumer.Address = new Address("Street 1", "123", "Zip 1", "City 1");
-console.log(costumer);
