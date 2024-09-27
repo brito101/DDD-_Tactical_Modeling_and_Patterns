@@ -5,7 +5,7 @@ import OrderItem from "./domain/entity/order_item";
 
 let customer = new Customer("1", "Costumer 1");
 const address = new Address("Street 1", "123", "Zip", "City");
-customer.Address = address;
+customer.address = address;
 customer.activate();
 
 const item1 = new OrderItem("1", "Item 1", 10, "1", 2);
