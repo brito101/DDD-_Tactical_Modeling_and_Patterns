@@ -1,30 +1,31 @@
 export default class Address {
   _street: string = "";
   _number: string = "";
-  _zip: string = "";
+  _zipcode: string = "";
   _city: string = "";
 
-  constructor(street: string, number: string, zip: string, city: string) {
+  constructor(street: string, number: string, zipcode: string, city: string) {
     this._street = street;
     this._number = number;
-    this._zip = zip;
+    this._zipcode = zipcode;
     this._city = city;
+
     this.validate();
   }
 
-  get street() {
+  get street(): string {
     return this._street;
   }
 
-  get number() {
+  get number(): string {
     return this._number;
   }
 
-  get zipcode() {
-    return this._zip;
+  get zipcode(): string {
+    return this._zipcode;
   }
 
-  get city() {
+  get city(): string {
     return this._city;
   }
 
@@ -35,8 +36,8 @@ export default class Address {
     if (this._number.length === 0) {
       throw new Error("Number is required");
     }
-    if (this._zip.length === 0) {
-      throw new Error("Zip is required");
+    if (this._zipcode.length === 0) {
+      throw new Error("Zipcode is required");
     }
     if (this._city.length === 0) {
       throw new Error("City is required");
@@ -44,6 +45,6 @@ export default class Address {
   }
 
   toString() {
-    return `${this._street}, ${this._number} - ${this._zip}/${this._city}`;
+    return `${this._street}, ${this._number}, ${this._zipcode} ${this._city}`;
   }
 }

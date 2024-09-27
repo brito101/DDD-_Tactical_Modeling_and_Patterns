@@ -1,9 +1,10 @@
 import { Sequelize } from "sequelize-typescript";
-import ProductModel from "../db/sequelize/model/product.model";
-import Product from "../../domain/entity/product";
-import ProductRepository from "./product.repository";
+import CustomerModel from "../db/sequelize/model/customer.model";
+import Customer from "../../domain/entity/customer";
+import CustomerRepository from "./customer.repository";
+import Address from "../../domain/entity/address";
 
-describe("Product repository unit tests", () => {
+describe("Customer repository unit tests", () => {
   let sequelize: Sequelize;
 
   beforeEach(async () => {
@@ -14,7 +15,7 @@ describe("Product repository unit tests", () => {
       sync: { force: true },
     });
 
-    sequelize.addModels([ProductModel]);
+    sequelize.addModels([CustomerModel]);
 
     await sequelize.sync();
   });
@@ -23,67 +24,24 @@ describe("Product repository unit tests", () => {
     await sequelize.close();
   });
 
-  it("should create a product", async () => {
-    const repository = new ProductRepository();
-    const product = new Product("1", "Product 1", 10);
+  it("should create a customer", async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("123", "Customer 1");
+    const address = new Address("Street 1", "123", "Zipcode 1", "City 1");
+    customer.Address = address;
+    await customerRepository.create(customer);
 
-    await repository.create(product);
+    const customerModel = await CustomerModel.findOne({ where: { id: "123" } });
 
-    const productModel = await ProductModel.findOne({ where: { id: "1" } });
-
-    expect(productModel.toJSON()).toStrictEqual({
-      id: "1",
-      name: "Product 1",
-      price: 10,
+    expect(customerModel.toJSON()).toStrictEqual({
+      id: "123",
+      name: customer.name,
+      active: customer.isActive(),
+      rewardPoints: customer.rewardPoints,
+      street: address.street,
+      number: address.number,
+      zipcode: address.zipcode,
+      city: address.city,
     });
-  });
-
-  it("should update a product", async () => {
-    const repository = new ProductRepository();
-    const product = new Product("1", "Product 1", 10);
-    await repository.create(product);
-
-    product.changeName("Product 2");
-    product.changePrice(20);
-    await repository.update(product);
-
-    const productModel = await ProductModel.findOne({ where: { id: "1" } });
-
-    expect(productModel.toJSON()).toStrictEqual({
-      id: "1",
-      name: "Product 2",
-      price: 20,
-    });
-  });
-
-  it("should find a product", async () => {
-    const repository = new ProductRepository();
-    const product = new Product("1", "Product 1", 10);
-    await repository.create(product);
-
-    const productModel = await ProductModel.findOne({ where: { id: "1" } });
-
-    const result = await repository.find("1");
-
-    expect(productModel.toJSON()).toStrictEqual(
-      expect.objectContaining({
-        id: result.id,
-        name: result.name,
-        price: result.price,
-      })
-    );
-  });
-
-  it("should find all products", async () => {
-    const repository = new ProductRepository();
-    const product1 = new Product("1", "Product 1", 10);
-    await repository.create(product1);
-    const product2 = new Product("2", "Product 2", 20);
-    await repository.create(product2);
-
-    const result = await repository.findAll();
-    const products = [product1, product2];
-
-    expect(products).toEqual(result);
   });
 });
