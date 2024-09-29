@@ -12,11 +12,11 @@ export default class Address {
     this.validate();
   }
 
-  toString() {
+  toString(): string {
     return `${this._street}, ${this._number}, ${this._city}, ${this._zipcode}`;
   }
 
-  validate() {
+  validate(): boolean {
     if (this._street.length === 0) {
       throw new Error("Street is mandatory");
     }
@@ -29,5 +29,7 @@ export default class Address {
     if (this._zipcode.length === 0) {
       throw new Error("Zipcode is mandatory");
     }
+
+    return true;
   }
 }
