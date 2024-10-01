@@ -2,7 +2,7 @@
 
 ## DDD: Tactical Modeling and Patterns
 
-### Commands History
+### Dependencies history
 
 - `npm i typescript --save-dev`
 - `npx tsc --init`
@@ -11,5 +11,10 @@
 - `npm i -D jest @types/jest ts-node --save-dev`
 - `npm i -D @swc/jest @swc/cli @swc/core`
 - `npx jest --init`
+- `npm i uuid @types/uuid`
 
+
+### Commands
+
+- `npm test`
 
