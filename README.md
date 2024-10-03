@@ -12,6 +12,8 @@
 - `npm i -D @swc/jest @swc/cli @swc/core`
 - `npx jest --init`
 - `npm i uuid @types/uuid`
+- `npm i sequelize reflect-metadata sequelize-typescript`
+- `npm i sqlite3`
 
 
 ### Commands
