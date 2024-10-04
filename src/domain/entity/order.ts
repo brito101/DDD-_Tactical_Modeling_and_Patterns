@@ -31,6 +31,12 @@ export default class Order {
     return this._items.reduce((acc, item) => acc + item.orderItemTotal(), 0);
   }
 
+  changeItems(items: OrderItem[]) {
+    this._items = items
+    this.validate();
+    this._total = this.total();
+  }
+
   validate(): boolean {
     if (this._id.length === 0) {
       throw new Error("Id is required");
